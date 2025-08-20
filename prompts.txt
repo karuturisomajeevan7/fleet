@@ -1,0 +1,161 @@
+Prompts:
+1.Code Generation
+@workspace You are a senior C++17 developer.
+Generate a clean, professional, multi-file C++ project with the following structure:
+
+Files:
+- Vehicle.h / Vehicle.cpp → Defines Vehicle class (id, speed, temperature, fuel).
+- FleetManager.h / FleetManager.cpp → Manages std::vector<Vehicle>, computes averages, and triggers alerts.
+- main.cpp → Loads vehicles from a CSV file, calls FleetManager functions, prints results.
+- CMakeLists.txt → Build configuration.
+
+Requirements:
+- Alerts:
+  • Temperature >= 110 → "Critical Overheating"
+  • Fuel < 15 → "Low Fuel Warning"
+- Handle edge cases:
+  • Empty dataset → throw std::runtime_error
+  • Malformed CSV lines → skip with error log
+  • Boundary conditions: exactly 110°C = Overheating, exactly 15 fuel = No Warning
+- Comment public functions and tricky parts.
+2. Debugging
+@workspace You are a C++ debugger.
+Here are my files: Vehicle.*, FleetManager.*, main.cpp, CMakeLists.txt
+
+Problems:
+1. Program crashes when CSV has empty lines.
+2. Averages compute incorrectly if dataset is empty.
+3. Alerts not showing at boundary conditions (110°C, 15% fuel).
+
+Tasks:
+- Identify exact bug sources.
+- Suggest clean fixes while keeping code maintainable.
+- Explain why the fix works.
+- Provide corrected code snippets.
+3. Fix Empty CSV Crash
+@workspace /fix
+Fix the crash when CSV is empty or only contains empty lines.
+
+Constraints:
+- Do NOT change existing naming conventions or logic.
+- Keep skipping empty lines intact.
+- Add robust check in main.cpp: if fleet is empty after parsing, throw a clean std::runtime_error.
+- Keep exception messages user-friendly.
+- Ensure all unit tests still pass.
+4. Concurrency
+@workspace You are a C++ concurrency expert.
+Extend the Fleet Management project to simulate concurrent vehicle updates.
+
+Requirements:
+- Each Vehicle runs in a separate std::thread, updating speed/temp/fuel randomly in a loop.
+- Use std::mutex to protect shared data when FleetManager aggregates.
+- No race conditions when reading/updating vehicles.
+- Compare performance:
+  • Single-threaded aggregation
+  • Multi-threaded aggregation
+- Print elapsed time for both approaches.
+- Add comments explaining synchronization logic.
+5.Unit & Integration Testing
+@workspace You are a C++ tester.
+Write unit and integration tests for Vehicle and FleetManager using <cassert>.
+
+Test cases:
+- Vehicle temp = 120 → triggers "Critical Overheating"
+- Vehicle fuel = 10 → triggers "Low Fuel Warning"
+- Fleet speeds [80, 90, 100] → avg speed = 90
+- Boundary: temp = 110 → Overheating triggered
+- Boundary: fuel = 15 → No warning
+- Empty dataset → throw std::runtime_error
+- Malformed CSV line → skipped safely without crash
+
+Output:
+- Create tests/test_fleet.cpp with modular test functions.
+- Each test asserts correctness.
+- If any test fails, program should stop with assertion failure.
+6. Fix Issues in Tests
+@workspace /fix
+Fix issues in tests.cpp:
+1. Complete the main() function (missing semicolon/brace).
+2. Add missing #include <cmath> for std::abs().
+3. Fix pattern: test alerts on Vehicle objects inside FleetManager, not on unused copies.
+4. Use std::move() when adding vehicles to FleetManager.
+
+Tests should verify:
+- Overheating alert triggers at >= 110°C
+- Low fuel warning triggers at < 15%
+- Average calculations correct
+- Empty fleet throws runtime_error
+- CSV parsing handles malformed input safely
+7.Improve Test Output
+@workspace You are a C++ test engineer.
+Modify tests.cpp so instead of only printing "All tests passed",
+it prints each test case result:
+
+Format:
+[PASS] Vehicle overheating test (temp=120 → Critical Overheating)
+[FAIL] Empty dataset test → Expected exception, got none
+
+Requirements:
+- Run all tests (do not stop at first failure).
+- Count passed/failed tests.
+- Print summary at end (e.g., "5/6 tests passed").
+- Ensure Vehicle objects tested are the same ones added to FleetManager.
+8.Expanded Test Cases (Normal, Edge, Invalid)
+@workspace You are a C++ tester.
+Expand tests.cpp with more cases:
+
+Normal:
+- Vehicle with valid data → no alerts.
+- Fleet with 5 valid vehicles → correct averages.
+- CSV with valid rows loads correctly.
+
+Edge:
+- Temp = 110 → Overheating triggered.
+- Fuel = 15 → No warning.
+- Empty fleet → throws runtime_error.
+- Large fleet (1000 vehicles) → averages computed correctly.
+
+Invalid:
+- CSV missing columns → skipped safely with error log.
+- CSV with non-numeric data → skipped without crash.
+- Completely empty CSV → throws runtime_error.
+- Negative speed or fuel values → skipped as invalid.
+
+Output:
+- Each test prints [PASS]/[FAIL] with description.
+- Show summary of results.
+9.Build & Run Guide
+@workspace You are a C++ build assistant.
+I have these files:
+- Vehicle.h / Vehicle.cpp
+- FleetManager.h / FleetManager.cpp
+- main.cpp
+- tests.cpp
+- CMakeLists.txt
+
+Guide me to:
+1. Compile main.cpp + Vehicle.cpp + FleetManager.cpp → fleet_app.
+2. Compile tests.cpp + Vehicle.cpp + FleetManager.cpp → fleet_tests.
+3. Show exact g++ commands.
+4. Explain how to run both executables from terminal with CSV input.
+10. Documentation (README.md):
+@workspace You are a C++ documentation writer.
+Generate a simple README.md for this project.
+
+
+Include:
+1. Introduction (fleet management with alerts, averages, CSV parsing).
+2. System Requirements (g++, VS Code with C++ extension).
+3. Project Files (short description each).
+4. How to Build (g++ commands).
+5. Sample Input/Output (vehicles.csv + program output).
+Keep it short, clean,
+
+prompt for 2nd question:
+
+I have a small C++ program that lists vehicle speeds, temperatures, and fuel levels, but the code is messy and procedural. Here’s what I need: 
+1. Refactor it into a clean, object-oriented design using C++17. - Create a Vehicle class with id, speed, temperature, and fuel. - Create a FleetManager class to manage multiple vehicles, compute averages, and display alerts/warnings. 
+2. Replace all magic numbers and hardcoded arrays with proper data structures and constructors.
+3. Add CSV input for vehicles, and validate it. Skip malformed lines safely with error messages.
+4. Follow best practices: - Encapsulation and const-correctness - Exception handling for invalid input or empty datasets - Separate header and implementation files - Add clear comments for classes and tricky logic 
+5. Output should clearly display: - Each vehicle’s data - Fleet averages - Alerts for overheating or low fuel Basically, I want this messy code transformed into a professional, maintainable, and readable OOP C++ project that’s ready for testing and extension.
