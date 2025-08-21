@@ -62,6 +62,8 @@
     "iosfwd": "cpp",
     "iomanip": "cpp",
     "sstream": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "atomic": "cpp",
+    "mutex": "cpp"
   }
 }
