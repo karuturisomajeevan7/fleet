@@ -55,10 +55,10 @@ void test_vehicle_no_alerts(TestResult& result) {
     fm.addVehicle(std::move(v));
     auto alerts = fm.checkAlerts(*vptr);
     if (alerts.empty()) {
-        std::cout << "[PASS] Vehicle with valid data → no alerts\n";
+        std::cout << "[PASS] Vehicle with valid data - no alerts\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Vehicle with valid data → no alerts (got alerts)\n";
+        std::cout << "[FAIL] Vehicle with valid data - no alerts (got alerts)\n";
         result.failed++;
     }
 }
@@ -76,10 +76,10 @@ void test_fleet_multiple_vehicles_averages(TestResult& result) {
               std::abs(avgTemp - 110.0) < 1e-6 &&
               std::abs(avgFuel - 50.0) < 1e-6;
     if (ok) {
-        std::cout << "[PASS] Fleet with multiple vehicles → correct averages\n";
+        std::cout << "[PASS] Fleet with multiple vehicles - correct averages\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Fleet with multiple vehicles → correct averages\n";
+        std::cout << "[FAIL] Fleet with multiple vehicles - correct averages\n";
         result.failed++;
     }
 }
@@ -103,10 +103,10 @@ void test_csv_5_valid_rows(TestResult& result) {
         }
     }
     if (loaded == 5 && fm.getFleet().size() == 5) {
-        std::cout << "[PASS] CSV with 5 valid rows → loads all rows correctly\n";
+        std::cout << "[PASS] CSV with 5 valid rows - loads all rows correctly\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] CSV with 5 valid rows → loads all rows correctly\n";
+        std::cout << "[FAIL] CSV with 5 valid rows - loads all rows correctly\n";
         result.failed++;
     }
 }
@@ -123,10 +123,10 @@ void test_boundary_temp_110_alert(TestResult& result) {
     for (const auto& a : alerts)
         if (a == "Critical Overheating") found = true;
     if (found) {
-        std::cout << "[PASS] Temperature exactly 110 → 'Critical Overheating'\n";
+        std::cout << "[PASS] Temperature exactly 110 - Critical Overheating\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Temperature exactly 110 → 'Critical Overheating'\n";
+        std::cout << "[FAIL] Temperature exactly 110 - Critical Overheating\n";
         result.failed++;
     }
 }
@@ -141,10 +141,10 @@ void test_boundary_fuel_15_no_warning(TestResult& result) {
     for (const auto& a : alerts)
         if (a == "Low Fuel Warning") found = true;
     if (!found) {
-        std::cout << "[PASS] Fuel exactly 15 → No warning\n";
+        std::cout << "[PASS] Fuel exactly 15 - No warning\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Fuel exactly 15 → No warning\n";
+        std::cout << "[FAIL] Fuel exactly 15 - No warning\n";
         result.failed++;
     }
 }
@@ -158,10 +158,10 @@ void test_empty_fleet_throws(TestResult& result) {
         threw = true;
     }
     if (threw) {
-        std::cout << "[PASS] Empty fleet → throws std::runtime_error\n";
+        std::cout << "[PASS] Empty fleet - throws std::runtime_error\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Empty fleet → throws std::runtime_error\n";
+        std::cout << "[FAIL] Empty fleet - throws std::runtime_error\n";
         result.failed++;
     }
 }
@@ -186,10 +186,10 @@ void test_large_fleet_averages(TestResult& result) {
               std::abs(avgTemp - (tempSum / n)) < 1e-6 &&
               std::abs(avgFuel - (fuelSum / n)) < 1e-6;
     if (ok) {
-        std::cout << "[PASS] Large fleet (1000 vehicles) → averages computed correctly\n";
+        std::cout << "[PASS] Large fleet (1000 vehicles) - averages computed correctly\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Large fleet (1000 vehicles) → averages computed correctly\n";
+        std::cout << "[FAIL] Large fleet (1000 vehicles) - averages computed correctly\n";
         result.failed++;
     }
 }
@@ -200,10 +200,10 @@ void test_csv_missing_columns(TestResult& result) {
     std::string errorMsg;
     auto v = parseVehicleCsv("1,80,100", errorMsg);
     if (!v) {
-        std::cout << "[PASS] CSV line with missing columns → skipped safely\n";
+        std::cout << "[PASS] CSV line with missing columns - skipped safely\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] CSV line with missing columns → skipped safely\n";
+        std::cout << "[FAIL] CSV line with missing columns - skipped safely\n";
         result.failed++;
     }
 }
@@ -212,10 +212,10 @@ void test_csv_non_numeric(TestResult& result) {
     std::string errorMsg;
     auto v = parseVehicleCsv("a,b,c,d", errorMsg);
     if (!v) {
-        std::cout << "[PASS] CSV line with non-numeric data → skipped safely\n";
+        std::cout << "[PASS] CSV line with non-numeric data - skipped safely\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] CSV line with non-numeric data → skipped safely\n";
+        std::cout << "[FAIL] CSV line with non-numeric data - skipped safely\n";
         result.failed++;
     }
 }
@@ -230,10 +230,10 @@ void test_empty_csv_file(TestResult& result) {
         threw = true;
     }
     if (threw) {
-        std::cout << "[PASS] Completely empty CSV file → throws std::runtime_error\n";
+        std::cout << "[PASS] Completely empty CSV file - throws std::runtime_error\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Completely empty CSV file → throws std::runtime_error\n";
+        std::cout << "[FAIL] Completely empty CSV file - throws std::runtime_error\n";
         result.failed++;
     }
 }
@@ -244,10 +244,10 @@ void test_negative_speed_or_fuel(TestResult& result) {
     auto v2 = parseVehicleCsv("2,80,100,-50", errorMsg);
     bool ok = (!v1 && !v2);
     if (ok) {
-        std::cout << "[PASS] Negative speed or fuel values → treated as invalid and skipped\n";
+        std::cout << "[PASS] Negative speed or fuel values - treated as invalid and skipped\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Negative speed or fuel values → treated as invalid and skipped\n";
+        std::cout << "[FAIL] Negative speed or fuel values - treated as invalid and skipped\n";
         result.failed++;
     }
 }
@@ -264,10 +264,10 @@ void test_critical_overheating(TestResult& result) {
     for (const auto& a : alerts)
         if (a == "Critical Overheating") found = true;
     if (found) {
-        std::cout << "[PASS] Vehicle overheating test (temp = 120 → Critical Overheating)\n";
+        std::cout << "[PASS] Vehicle overheating test (temp = 120 - Critical Overheating)\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Vehicle overheating test (temp = 120 → Critical Overheating)\n";
+        std::cout << "[FAIL] Vehicle overheating test (temp = 120 - Critical Overheating)\n";
         result.failed++;
     }
 }
@@ -282,10 +282,10 @@ void test_low_fuel_warning(TestResult& result) {
     for (const auto& a : alerts)
         if (a == "Low Fuel Warning") found = true;
     if (found) {
-        std::cout << "[PASS] Vehicle low fuel test (fuel = 10 → Low Fuel Warning)\n";
+        std::cout << "[PASS] Vehicle low fuel test (fuel = 10 - Low Fuel Warning)\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Vehicle low fuel test (fuel = 10 → Low Fuel Warning)\n";
+        std::cout << "[FAIL] Vehicle low fuel test (fuel = 10 - Low Fuel Warning)\n";
         result.failed++;
     }
 }
@@ -300,10 +300,10 @@ void test_average_speed(TestResult& result) {
     fm.addVehicle(std::move(v3));
     double avg = fm.averageSpeed();
     if (std::abs(avg - 90.0) < 1e-6) {
-        std::cout << "[PASS] Fleet average speed test (80, 90, 100 → avg = 90)\n";
+        std::cout << "[PASS] Fleet average speed test (80, 90, 100 - avg = 90)\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Fleet average speed test (80, 90, 100 → avg = 90), got avg = " << avg << "\n";
+        std::cout << "[FAIL] Fleet average speed test (80, 90, 100 - avg = 90), got avg = " << avg << "\n";
         result.failed++;
     }
 }
@@ -318,10 +318,10 @@ void test_boundary_overheating(TestResult& result) {
     for (const auto& a : alerts)
         if (a == "Critical Overheating") found = true;
     if (found) {
-        std::cout << "[PASS] Boundary test (temp = 110 → Overheating triggered)\n";
+        std::cout << "[PASS] Boundary test (temp = 110 - Overheating triggered)\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Boundary test (temp = 110 → Overheating triggered)\n";
+        std::cout << "[FAIL] Boundary test (temp = 110 - Overheating triggered)\n";
         result.failed++;
     }
 }
@@ -336,10 +336,10 @@ void test_boundary_fuel(TestResult& result) {
     for (const auto& a : alerts)
         if (a == "Low Fuel Warning") found = true;
     if (!found) {
-        std::cout << "[PASS] Boundary test (fuel = 15 → No Low Fuel Warning)\n";
+        std::cout << "[PASS] Boundary test (fuel = 15 - No Low Fuel Warning)\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Boundary test (fuel = 15 → No Low Fuel Warning)\n";
+        std::cout << "[FAIL] Boundary test (fuel = 15 - No Low Fuel Warning)\n";
         result.failed++;
     }
 }
@@ -353,10 +353,10 @@ void test_empty_dataset(TestResult& result) {
         threw = true;
     }
     if (threw) {
-        std::cout << "[PASS] Empty dataset test → Expected exception thrown\n";
+        std::cout << "[PASS] Empty dataset test - Expected exception thrown\n";
         result.passed++;
     } else {
-        std::cout << "[FAIL] Empty dataset test → Expected exception, got none\n";
+        std::cout << "[FAIL] Empty dataset test - Expected exception, got none\n";
         result.failed++;
     }
 }

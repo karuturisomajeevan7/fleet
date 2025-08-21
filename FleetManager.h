@@ -1,3 +1,8 @@
+/**
+ * @file FleetManager.h
+ * @brief Declaration of the FleetManager class for managing a fleet of vehicles.
+ */
+
 #pragma once
 #include "Vehicle.h"
 #include <vector>
@@ -5,11 +10,7 @@
 #include <string>
 
 /**
- * @file FleetManager.h
- * @brief Declaration of the FleetManager class for managing a fleet of vehicles.
- */
-
-/**
+ * @class FleetManager
  * @brief Manages a fleet of vehicles, computes statistics, and triggers alerts.
  */
 class FleetManager {
@@ -59,7 +60,6 @@ public:
      */
     const std::vector<std::unique_ptr<Vehicle>>& getFleet() const;
 
-    
 private:
     std::vector<std::unique_ptr<Vehicle>> fleet_; ///< Vector of unique pointers to Vehicle objects.
 };

@@ -7,11 +7,11 @@
  */
 
 /**
+ * @class Vehicle
  * @brief Represents a vehicle with telemetry data.
  */
 class Vehicle {
 public:
-
     /**
      * @brief Constructs a Vehicle object.
      * @param id Vehicle's unique identifier.
